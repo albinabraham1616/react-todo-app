@@ -1,5 +1,10 @@
 import styles from "./Navbar.module.css";
-function NavButton({ value, isActive, onNavClick }) {
+interface NavButtonProps {
+  value: string;
+  isActive: boolean;
+  onNavClick: (value: string) => void;
+}
+function NavButton({ value, isActive, onNavClick }: NavButtonProps) {
   const buttonClass = isActive ? styles.activeButton : styles.text;
 
   return (
