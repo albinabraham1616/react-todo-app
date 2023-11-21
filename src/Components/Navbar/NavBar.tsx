@@ -1,22 +1,9 @@
 import { useState } from "react";
 import styles from "./Navbar.module.css";
 import { NavButton } from "..";
-/**
- * Props for the NavBar component.
- * @interface
- * @property {React.Dispatch<React.SetStateAction<boolean>>} setShowModal - Function to set the modal visibility state.
- */
-interface NavBarProps {
-  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
-}
-/**
- * Functional component representing a navigation bar.
- * @component
- * @param {NavBarProps} props - The props for the NavBar component.
- * if we click the add todo button createTodo ui will come,for that i set a state as true.
- */
+import { IProps } from "../types";
 
-function NavBar({ setShowModal }: NavBarProps) {
+function NavBar({ setShowModal }: IProps) {
   const [activeItem, setActiveItem] = useState<string>("All");
   const handleItemClick = (value: string) => {
     if (value === "+") {

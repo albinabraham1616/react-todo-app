@@ -1,29 +1,8 @@
-import styles from "./CreateTodo.module.css";
 import React, { useState } from "react";
+import styles from "./CreateTodo.module.css";
+import { CreateTodoData, IProps } from "../types";
 
-/**
- * Represents the data structure for creating a new Todo.
- * @interface
- * @property {string} title - The title of the Todo.
- * @property {string} description - The description of the Todo.
- * @property {string} dueDate - The due date of the Todo.
- */
-interface CreateTodoData {
-  title: string;
-  description: string;
-  dueDate: string;
-}
-/**
- * Props for the CreateTodo component.
- * @interface
- * @property {React.Dispatch<React.SetStateAction<boolean>>} setShowModal - Function to set the modal visibility state.
- */
-
-interface CreateTodoProps {
-  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-function CreateTodo({ setShowModal }: CreateTodoProps) {
+function CreateTodo({ setShowModal }: IProps) {
   const [formData, setFormData] = useState<CreateTodoData>({
     title: "",
     description: "",
@@ -41,7 +20,7 @@ function CreateTodo({ setShowModal }: CreateTodoProps) {
   };
   /**
    * Handles the submission to create a new Todo.
-   * for create button we set a state as false
+   * for create button, set a state as false
    */
   const handleCreate = (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -50,7 +29,7 @@ function CreateTodo({ setShowModal }: CreateTodoProps) {
   };
   /**
    * Handles the cancellation of Todo creation.
-   * For cancel button we set a state as false
+   * For cancel button, set a state as false
    */
   function handleCancel() {
     console.log("cancelled");
