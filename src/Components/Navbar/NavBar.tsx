@@ -1,20 +1,22 @@
 import { useState } from "react";
 import styles from "./Navbar.module.css";
 import { NavButton } from "..";
+import { IProps } from "../types";
 
-function NavBar() {
-  const [activeItem, setActiveItem] = useState("All");
-  const handleItemClick = (value) => {
+function NavBar({ setShowModal }: IProps) {
+  const [activeItem, setActiveItem] = useState<string>("All");
+  const handleItemClick = (value: string) => {
     if (value === "+") {
       setActiveItem("Add-Todo");
+      setShowModal(true);
     } else {
       setActiveItem(value);
     }
   };
   return (
-    <nav className={styles.container}>
+    <main className={styles.container}>
       <header className={styles.heading}>{activeItem}</header>
-      <div className={styles.navbar_container}>
+      <nav className={styles.navbar_container}>
         <div className={styles.navbar}>
           <ul className={styles.textbutton}>
             <li>
@@ -47,8 +49,8 @@ function NavBar() {
             </li>
           </ul>
         </div>
-      </div>
-    </nav>
+      </nav>
+    </main>
   );
 }
 
