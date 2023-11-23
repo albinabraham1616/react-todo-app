@@ -1,14 +1,16 @@
 * {
   box-sizing: border-box;
 }
-:root{
-    --main-font: "Courier New", Courier, monospace;
+:root {
+  --main-font: "Courier New", Courier, monospace;
 }
+
 .todo_card_container {
   font-family: "Arial", sans-serif;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-bottom: 80px;
   height: 73vh;
   width: 45%;
   margin-top: 5.125rem;
@@ -30,7 +32,7 @@
   height: 3.125rem;
   width: 450px;
   border: 1px solid rgb(10, 9, 9);
-  font-size:1.25rem;
+  font-size: 1.25rem;
   font-family: var(--main-font);
   font-weight: bold;
 }
@@ -38,7 +40,7 @@
   color: rgb(0, 0, 0);
 }
 .description {
-  height: 7.5rem;;
+  height: 7.5rem;
   width: 450px;
   border: 1px solid rgb(10, 9, 9);
   font-size: 1.25rem;
@@ -56,7 +58,8 @@
   font-family: var(--main-font);
   font-weight: bold;
 }
-.cancel_button,.create_button {
+.cancel_button,
+.create_button {
   margin: 0 auto;
   height: 3.125rem;
   width: 100px;
@@ -67,10 +70,13 @@
   color: rgb(29, 29, 222);
   background-color: rgb(213, 238, 91);
 }
-.cancel_button:hover,.create_button:hover {
+.cancel_button:hover,
+.create_button:hover {
   transform: scale(1.1);
   border: 3px solid rgb(227, 63, 48);
   cursor: pointer;
   box-shadow: 0 0 5px white;
 }
-
+.gap{
+  padding: .625rem;
+}

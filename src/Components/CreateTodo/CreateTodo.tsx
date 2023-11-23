@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import styles from "./CreateTodo.module.css";
-import { CreateTodoData, IProps } from "../types";
+import { CreateTodoData } from "../types";
 
-function CreateTodo({ setShowModal }: IProps) {
+function CreateTodo() {
   const [formData, setFormData] = useState<CreateTodoData>({
     title: "",
     description: "",
@@ -20,28 +20,24 @@ function CreateTodo({ setShowModal }: IProps) {
   };
   /**
    * Handles the submission to create a new Todo.
-   * for create button, set a state as false
+   
    */
   const handleCreate = (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    setShowModal(false);
     console.log("Form Data:", formData);
   };
   /**
    * Handles the cancellation of Todo creation.
-   * For cancel button, set a state as false
    */
   function handleCancel() {
     console.log("cancelled");
-    setShowModal(false);
   }
   return (
     <div className={styles.todo_card_container}>
       <form className={styles.todo_card}>
         <label>
           Title:
-          <br></br>
-          <br></br>
+          <div className={styles.gap}></div>
           <input
             className={styles.title}
             type="text"
@@ -57,8 +53,7 @@ function CreateTodo({ setShowModal }: IProps) {
 
         <label>
           Description:
-          <br></br>
-          <br></br>
+          <div className={styles.gap}></div>
           <textarea
             className={styles.description}
             name="description"
@@ -73,8 +68,7 @@ function CreateTodo({ setShowModal }: IProps) {
 
         <label>
           Due Date:
-          <br></br>
-          <br></br>
+          <div className={styles.gap}></div>
           <input
             className={styles.dueDate}
             type="date"
