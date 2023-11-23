@@ -36,72 +36,74 @@ function CreateTodo({ setShowModal }: IProps) {
     setShowModal(false);
   }
   return (
-    <div className={styles.todo_card_container}>
-      <form className={styles.todo_card}>
-        <label>
-          Title:
+    <div className={styles.overlay_modal}>
+      <div className={styles.todo_card_container}>
+        <form className={styles.todo_card}>
+          <label>
+            Title:
+            <br></br>
+            <br></br>
+            <input
+              className={styles.title}
+              type="text"
+              name="title"
+              placeholder="Todo title here"
+              value={formData.title}
+              onChange={handleInputChange}
+              required
+            />
+          </label>
+          <br />
           <br></br>
-          <br></br>
-          <input
-            className={styles.title}
-            type="text"
-            name="title"
-            placeholder="Todo title here"
-            value={formData.title}
-            onChange={handleInputChange}
-            required
-          />
-        </label>
-        <br />
-        <br></br>
 
-        <label>
-          Description:
+          <label>
+            Description:
+            <br></br>
+            <br></br>
+            <textarea
+              className={styles.description}
+              name="description"
+              placeholder="Todo Details"
+              value={formData.description}
+              onChange={handleInputChange}
+              required
+            />
+          </label>
+          <br />
           <br></br>
-          <br></br>
-          <textarea
-            className={styles.description}
-            name="description"
-            placeholder="Todo Details"
-            value={formData.description}
-            onChange={handleInputChange}
-            required
-          />
-        </label>
-        <br />
-        <br></br>
 
-        <label>
-          Due Date:
+          <label>
+            Due Date:
+            <br></br>
+            <br></br>
+            <input
+              className={styles.dueDate}
+              type="date"
+              name="dueDate"
+              value={formData.dueDate}
+              onChange={handleInputChange}
+              required
+            />
+          </label>
+          <br />
           <br></br>
-          <br></br>
-          <input
-            className={styles.dueDate}
-            type="date"
-            name="dueDate"
-            value={formData.dueDate}
-            onChange={handleInputChange}
-            required
-          />
-        </label>
-        <br />
-        <br></br>
 
-        <button
-          type="submit"
-          onClick={handleCancel}
-          className={styles.cancel_button}
-        >
-          CANCEL
-        </button>
-        <button
-          type="submit"
-          onClick={handleCreate}
-          className={styles.create_button}
-        >
-          CREATE
-        </button>
-      </form>
+          <button
+            type="submit"
+            onClick={handleCancel}
+            className={styles.cancel_button}
+          >
+            CANCEL
+          </button>
+          <button
+            type="submit"
+            onClick={handleCreate}
+            className={styles.create_button}
+          >
+            CREATE
+          </button>
+        </form>
+      </div>
     </div>
   );
 }

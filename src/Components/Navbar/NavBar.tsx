@@ -1,50 +1,40 @@
-import { useState } from "react";
 import styles from "./Navbar.module.css";
 import { NavButton } from "..";
-import { IProps } from "../types";
+import { INavProps } from "../types";
 
-function NavBar({ setShowModal }: IProps) {
-  const [activeItem, setActiveItem] = useState<string>("All");
-  const handleItemClick = (value: string) => {
-    if (value === "+") {
-      setActiveItem("Add-Todo");
-      setShowModal(true);
-    } else {
-      setActiveItem(value);
-    }
-  };
+function NavBar({ handleClick, activate }: INavProps) {
   return (
     <main className={styles.container}>
-      <header className={styles.heading}>{activeItem}</header>
+      <header className={styles.heading}>{activate}</header>
       <nav className={styles.navbar_container}>
         <div className={styles.navbar}>
           <ul className={styles.textbutton}>
             <li>
               <NavButton
                 value="All"
-                isActive={activeItem === "All"}
-                onNavClick={handleItemClick}
+                isActive={activate === "All"}
+                onNavClick={handleClick}
               />
             </li>
             <li>
               <NavButton
                 value="In Progress"
-                isActive={activeItem === "In Progress"}
-                onNavClick={handleItemClick}
+                isActive={activate === "In Progress"}
+                onNavClick={handleClick}
               />
             </li>
             <li>
               <NavButton
                 value="Completed"
-                isActive={activeItem === "Completed"}
-                onNavClick={handleItemClick}
+                isActive={activate === "Completed"}
+                onNavClick={handleClick}
               />
             </li>
             <li className={styles.button}>
               <NavButton
                 value="+"
-                isActive={activeItem === "Add-Todo"}
-                onNavClick={handleItemClick}
+                isActive={activate === "Add-Todo"}
+                onNavClick={handleClick}
               />
             </li>
           </ul>

@@ -46,3 +46,42 @@ export interface IProps {
    */
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
+
+/**
+ * Represents the props for the display component.
+ */
+export interface DisplayProps {
+  /**
+   * The title of the displayed item.
+   */
+  title: string;
+
+  /**
+   * The description of the displayed item.
+   */
+  description: string;
+
+  /**
+   * The due date of the displayed item.
+   */
+  dueDate: string;
+
+  /**
+   * The status of the displayed item.
+   */
+  status: string;
+}
+
+/**
+ * Represents the props for the navigation component.
+ */
+export interface INavProps {
+  /**
+   * A function to handle click events on the navigation component
+   */
+  handleClick: (value: string) => void;
+  /**
+   * The currently activated item in the navigation component.if i click the value,the value will display in header.
+   */
+  activate: string;
+}
