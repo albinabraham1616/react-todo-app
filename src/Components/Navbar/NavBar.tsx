@@ -4,8 +4,10 @@ import { INavProps } from "../types";
 
 function NavBar({ handleClick, navType }: INavProps) {
   return (
-    <main className={styles.container}>
-      <header className={styles.heading}>{navType}</header>
+    <main className={styles.container} data-testid="NavBar">
+      <header className={styles.heading} data-testid="header">
+        {navType}
+      </header>
       <nav className={styles.navbar_container}>
         <div className={styles.navbar}>
           <ul className={styles.textbutton}>

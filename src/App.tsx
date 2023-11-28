@@ -23,7 +23,7 @@ function App() {
   return (
     <div style={{ position: "relative" }}>
       <NavBar handleClick={handleItemClick} navType={activeItem} />
-      {showModal && <CreateTodo />}
+      {showModal && <CreateTodo setShowModal={setShowModal} />}
       {filteredTodos.map((todo, index) => (
         <DisplayTodo key={index} todo={todo} />
       ))}
