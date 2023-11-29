@@ -6,7 +6,7 @@ import styles from "./Display.module.css";
  */
 function DisplayTodo({ todo }: { todo: DisplayProps }) {
   return (
-    <main className={styles.container}>
+    <main className={styles.container} data-testid="DisplayTodo">
       <div className={styles.display}>
         <h2 className={styles.title}>{todo.title}</h2>
         <h4>{todo.description}</h4>

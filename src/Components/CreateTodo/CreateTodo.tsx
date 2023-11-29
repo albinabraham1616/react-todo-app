@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import styles from "./CreateTodo.module.css";
-import { CreateTodoData } from "../types";
+import { CreateTodoData, IProps } from "../types";
 
-function CreateTodo() {
+function CreateTodo({ setShowModal }: IProps) {
   const [formData, setFormData] = useState<CreateTodoData>({
     title: "",
     description: "",
@@ -20,20 +20,21 @@ function CreateTodo() {
   };
   /**
    * Handles the submission to create a new Todo.
-   
    */
   const handleCreate = (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
     console.log("Form Data:", formData);
+    setShowModal(false);
   };
   /**
    * Handles the cancellation of Todo creation.
    */
   function handleCancel() {
     console.log("cancelled");
+    setShowModal(false);
   }
   return (
-    <div className={styles.todo_card_container}>
+    <div className={styles.todo_card_container} data-testid="createTodo">
       <form className={styles.todo_card}>
         <label>
           Title:
@@ -70,6 +71,7 @@ function CreateTodo() {
           Due Date:
           <div className={styles.gap}></div>
           <input
+            data-testid="dueDate"
             className={styles.dueDate}
             type="date"
             name="dueDate"

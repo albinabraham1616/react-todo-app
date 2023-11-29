@@ -4,7 +4,11 @@ function NavButton({ value, isActive, onNavClick }: NavButtonProps) {
   const buttonClass = isActive ? styles.activeButton : styles.text;
 
   return (
-    <button className={buttonClass} onClick={() => onNavClick(value)}>
+    <button
+      className={buttonClass}
+      onClick={() => onNavClick(value)}
+      data-testid={`${value}`}
+    >
       {value}
     </button>
   );
