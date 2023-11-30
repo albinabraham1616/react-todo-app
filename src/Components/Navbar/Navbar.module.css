@@ -31,6 +31,10 @@
   align-items: center;
   justify-content: space-evenly;
   list-style-type: none;
+  
+}
+.textbutton{
+  cursor: pointer;
 }
 .text {
   border: none;
@@ -67,4 +71,5 @@
   background-color: #4bc4ca;
   transform: scale(1.1);
   text-decoration: none;
+  cursor: pointer;
 }

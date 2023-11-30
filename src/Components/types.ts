@@ -50,7 +50,8 @@ export interface IProps {
 /**
  * Represents the props for the display component.
  */
-export interface DisplayProps {
+export interface TodoItems {
+  id: number;
   /**
    * The title of the displayed item.
    */
@@ -83,5 +84,25 @@ export interface INavProps {
   /**
    * The currently activated item in the navigation component.if i click the value,the value will display in header.
    */
-  navType: "All" | "In Progress" | "Completed" | "Add-Todo";
+  navType: "All" | "Pending" | "Completed" | "Add-Todo";
+}
+
+/**
+ * Props for the CreateTodo component.
+ */
+export interface CreateTodoProps {
+  /**
+   * Function to set the modal visibility state.
+   */
+  setShowModal: React.Dispatch<React.SetStateAction<string>>;
+
+  /**
+   * The selected todo item for updating, if in update mode.
+   */
+  selectedTodo: TodoItems;
+
+  /**
+   * A boolean flag indicating whether the component is in update mode.
+   */
+  isUpdate: boolean;
 }

@@ -40,4 +40,5 @@
   transform: scale(1.1);
   color: rgb(251, 245, 245);
   border-color: rgb(237, 237, 243);
+  cursor: pointer;
 }

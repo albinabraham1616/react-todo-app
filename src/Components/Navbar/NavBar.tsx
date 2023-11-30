@@ -20,8 +20,8 @@ function NavBar({ handleClick, navType }: INavProps) {
             </li>
             <li>
               <NavButton
-                value="In Progress"
-                isActive={navType === "In Progress"}
+                value="Pending"
+                isActive={navType === "Pending"}
                 onNavClick={handleClick}
               />
             </li>

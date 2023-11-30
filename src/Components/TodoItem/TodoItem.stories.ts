@@ -1,12 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { DisplayTodo } from "..";
+import { TodoItem } from "..";
 import { todos } from "../todosData";
-const meta: Meta<typeof DisplayTodo> = {
-  component: DisplayTodo,
+const meta: Meta<typeof TodoItem> = {
+  component: TodoItem,
 };
 export default meta;
 
-type Story = StoryObj<typeof DisplayTodo>;
+type Story = StoryObj<typeof TodoItem>;
 
 export const AllTodo: Story = {
   args: {
@@ -14,7 +14,7 @@ export const AllTodo: Story = {
   },
 };
 
-export const InProgressTodo: Story = {
+export const PendingTodo: Story = {
   args: {
     todo: todos.slice(0, 2),
   },

@@ -23,7 +23,7 @@ describe("Testing NavBar Component ", () => {
     };
     render(<NavBarWrapper />);
     allTodos = screen.getByTestId("All");
-    inProgressTodo = screen.getByTestId("In Progress");
+    inProgressTodo = screen.getByTestId("Pending");
     completedTodo = screen.getByTestId("Completed");
     addTodo = screen.getByTestId("+");
     header = screen.getByTestId("header");
@@ -50,9 +50,9 @@ describe("Testing NavBar Component ", () => {
     expect(header.textContent).toBe("Completed");
   });
 
-  it("should display In Progress content when 'In Progress' is clicked", async () => {
+  it("should display Pending content when 'Pending' is clicked", async () => {
     await userEvent.click(inProgressTodo);
-    expect(header.textContent).toBe("In Progress");
+    expect(header.textContent).toBe("Pending");
   });
 
   it("should display Add-Todo content when '+' is clicked", async () => {

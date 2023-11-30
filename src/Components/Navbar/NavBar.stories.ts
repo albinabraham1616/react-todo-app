@@ -14,7 +14,7 @@ export const Default: Story = {
 };
 export const ProgressState: Story = {
   args: {
-    navType: "In Progress",
+    navType: "Pending",
   },
 };
 export const CompletedState: Story = {
