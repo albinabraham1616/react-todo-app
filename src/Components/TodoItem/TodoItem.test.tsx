@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
-import { DisplayTodo } from "..";
+import { TodoItem } from "..";
 
-describe("DisplayTodo Component", () => {
+describe("TodoItem Component", () => {
   const todo = {
     title: "Test Title",
     description: "Test Description",
@@ -9,15 +9,15 @@ describe("DisplayTodo Component", () => {
     status: "Completed",
   };
   beforeEach(() => {
-    render(<DisplayTodo todo={todo} />);
+    render(<TodoItem todo={todo} />);
   });
 
   it("renders the CreateTodo component", () => {
-    const displayTodoComponent = screen.getByTestId("DisplayTodo");
+    const displayTodoComponent = screen.getByTestId("TodoItem");
     expect(displayTodoComponent).toBeVisible();
   });
 
-  it("renders the DisplayTodo component with the correct todo information", () => {
+  it("renders the TodoItem component with the correct todo information", () => {
     const titleElement = screen.getByText(todo.title);
     const descriptionElement = screen.getByText(todo.description);
     const dueDateElement = screen.getByText(`Due Date: ${todo.dueDate}`);

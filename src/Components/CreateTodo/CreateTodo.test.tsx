@@ -38,10 +38,10 @@ describe("Create Todo test component", () => {
 
     await userEvent.type(titleInput, "Checking Title");
     await userEvent.type(descriptionInput, "Checking Description");
-    await userEvent.type(dueDateInput, "2023-12-01");
+    await userEvent.type(dueDateInput, "2023-12-02");
 
     expect(titleInput.value).toBe("Checking Title");
     expect(descriptionInput.value).toBe("Checking Description");
-    expect(dueDateInput.value).toBe("2023-12-01");
+    expect(dueDateInput.value).toBe("2023-12-02");
   });
 });
