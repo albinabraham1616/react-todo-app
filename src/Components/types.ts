@@ -106,3 +106,23 @@ export interface CreateTodoProps {
    */
   isUpdate: boolean;
 }
+
+/**
+ * Interface representing props for the TodoCard component.
+ */
+export interface TodoCardProps {
+  /**
+   * The todo item to be displayed.
+   */
+  todo: TodoItems;
+
+  /**
+   * Callback function triggered when the delete button is clicked.
+   */
+  onDelete: (todo: TodoItems) => void;
+
+  /**
+   * Callback function triggered when the edit button is clicked.
+   */
+  onEdit: (todo: TodoItems) => void;
+}

@@ -1,6 +1,7 @@
 import styles from "./Navbar.module.css";
 import { NavButton } from "..";
 import { INavProps } from "../types";
+import { Link } from "react-router-dom";
 
 function NavBar({ handleClick, navType }: INavProps) {
   return (
@@ -12,32 +13,40 @@ function NavBar({ handleClick, navType }: INavProps) {
         <div className={styles.navbar}>
           <ul className={styles.textbutton}>
             <li>
-              <NavButton
-                value="All"
-                isActive={navType === "All"}
-                onNavClick={handleClick}
-              />
+              <Link to="/">
+                <NavButton
+                  value="All"
+                  isActive={navType === "All"}
+                  onNavClick={handleClick}
+                />
+              </Link>
             </li>
             <li>
-              <NavButton
-                value="Pending"
-                isActive={navType === "Pending"}
-                onNavClick={handleClick}
-              />
+              <Link to="/pending">
+                <NavButton
+                  value="Pending"
+                  isActive={navType === "Pending"}
+                  onNavClick={handleClick}
+                />
+              </Link>
             </li>
             <li>
-              <NavButton
-                value="Completed"
-                isActive={navType === "Completed"}
-                onNavClick={handleClick}
-              />
+              <Link to="/completed">
+                <NavButton
+                  value="Completed"
+                  isActive={navType === "Completed"}
+                  onNavClick={handleClick}
+                />
+              </Link>
             </li>
             <li className={styles.button}>
-              <NavButton
-                value="+"
-                isActive={navType === "Add-Todo"}
-                onNavClick={handleClick}
-              />
+              <Link to="/add-todo">
+                <NavButton
+                  value="+"
+                  isActive={navType === "Add-Todo"}
+                  onNavClick={handleClick}
+                />
+              </Link>
             </li>
           </ul>
         </div>

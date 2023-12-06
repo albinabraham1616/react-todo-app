@@ -13,14 +13,12 @@
   margin-bottom: 80px;
   height: 73vh;
   width: 40%;
-  margin-top: 5.125rem;
+  margin: 0 auto;
   background-color: #080808;
   border-radius: 0.625rem;
   color: rgb(29, 29, 222);
-  position: absolute;
-  z-index: 10;
-  top: 50%;
-  left: 30%;
+  
+  
 }
 .todo_card {
   font-size: 1.5rem;
