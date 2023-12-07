@@ -29,21 +29,24 @@ function CreateTodo({ setShowModal, selectedTodo, isUpdate }: CreateTodoProps) {
    * Handles the submission to create a new Todo.
    */
   const handleCreate = () => {
-    // e.preventDefault();
     console.log(formData);
 
     if (isUpdate) {
       const reqBody = {
+        id: selectedTodo?.id,
         status: completed ? "Completed" : "Pending",
         description:
           formData.description.length > 0
             ? formData.description
-            : selectedTodo?.description,
+            : selectedTodo?.description || "",
         dueDate:
           formData.dueDate.length > 0
             ? formData.dueDate
-            : selectedTodo?.dueDate,
-        title: formData.title.length > 0 ? formData.title : selectedTodo?.title,
+            : selectedTodo?.dueDate || "",
+        title:
+          formData.title.length > 0
+            ? formData.title
+            : selectedTodo?.title || "",
       };
 
       TodoService.updateTodo(selectedTodo?.id, reqBody)
@@ -57,10 +60,11 @@ function CreateTodo({ setShowModal, selectedTodo, isUpdate }: CreateTodoProps) {
         });
     } else {
       const reqBody = {
+        id: selectedTodo?.id,
         status: "Pending",
-        description: formData.description,
-        dueDate: formData.dueDate,
-        title: formData.title,
+        description: formData.description || "",
+        dueDate: formData.dueDate || "",
+        title: formData.title || "",
       };
       console.log("Update Mode:", reqBody);
       TodoService.createTodo(reqBody).then((res) => {

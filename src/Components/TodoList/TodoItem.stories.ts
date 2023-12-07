@@ -1,27 +1,27 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { TodoItem } from "..";
+import { TodoList } from "..";
 import { todos } from "../todosData";
-const meta: Meta<typeof TodoItem> = {
-  component: TodoItem,
+const meta: Meta<typeof TodoList> = {
+  component: TodoList,
 };
 export default meta;
 
-type Story = StoryObj<typeof TodoItem>;
+type Story = StoryObj<typeof TodoList>;
 
 export const AllTodo: Story = {
   args: {
-    todo: [...todos],
+    todos: [...todos],
   },
 };
 
 export const PendingTodo: Story = {
   args: {
-    todo: todos.slice(0, 2),
+    todos: todos.slice(0, 2),
   },
 };
 
 export const CompletedTodo: Story = {
   args: {
-    todo: todos.slice(2),
+    todos: todos.slice(2),
   },
 };

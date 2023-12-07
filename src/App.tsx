@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { NavBar, CreateTodo, TodoItem } from "./Components";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { NavBar, CreateTodo, TodoList } from "./Components";
 import { TodoItems } from "./Components/types";
 import TodoService from "./TodoService/todo.service";
 
@@ -34,41 +35,76 @@ function App() {
       setShowModal("");
     }
   };
-  function handleEditClick(todo: TodoItems | null) {
-    setSelectedTodo(todo);
-    setShowModal("update");
-  }
   function handleDeleteClick(todoId: number) {
     TodoService.deleteTodo(todoId);
-
     const updatedTodos = todos.filter((todo) => todo.id !== todoId);
     setTodos(updatedTodos);
   }
   return (
-    <div style={{ position: "relative" }}>
-      <NavBar handleClick={handleItemClick} navType={activeItem} />
-      {showModal === "create" && <CreateTodo setShowModal={setShowModal} />}
-      {showModal === "update" && (
-        <CreateTodo
-          setShowModal={setShowModal}
-          selectedTodo={selectedTodo}
-          isUpdate={true}
-        />
-      )}
+    <BrowserRouter>
+      <div>
+        <NavBar handleClick={handleItemClick} navType={activeItem} />
 
-      {!showModal && (
-        <>
-          {filteredTodos.map((todo, index) => (
-            <TodoItem
-              key={index}
-              todo={todo}
-              onEdit={() => handleEditClick(todo)}
-              onDelete={handleDeleteClick}
-            />
-          ))}
-        </>
-      )}
-    </div>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <TodoList
+                todos={filteredTodos}
+                setShowModal={setShowModal}
+                onDelete={handleDeleteClick}
+              />
+            }
+          />
+          <Route
+            path="/pending"
+            element={
+              <TodoList
+                todos={filteredTodos}
+                setShowModal={setShowModal}
+                onDelete={handleDeleteClick}
+              />
+            }
+          />
+          <Route
+            path="/completed"
+            element={
+              <TodoList
+                todos={filteredTodos}
+                setShowModal={setShowModal}
+                onDelete={handleDeleteClick}
+              />
+            }
+          />
+
+          <Route
+            path="/add-todo"
+            element={
+              <TodoList
+                todos={filteredTodos}
+                setShowModal={setShowModal}
+                onDelete={handleDeleteClick}
+              />
+            }
+          />
+        </Routes>
+
+        {showModal === "create" && (
+          <CreateTodo
+            setShowModal={setShowModal}
+            selectedTodo={null}
+            isUpdate={false}
+          />
+        )}
+        {showModal === "update" && (
+          <CreateTodo
+            setShowModal={setShowModal}
+            selectedTodo={selectedTodo}
+            isUpdate={true}
+          />
+        )}
+      </div>
+    </BrowserRouter>
   );
 }
 export default App;

@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { TodoItem } from "..";
+import { TodoList } from "..";
 
 describe("TodoItem Component", () => {
   const todo = {
@@ -9,7 +9,7 @@ describe("TodoItem Component", () => {
     status: "Completed",
   };
   beforeEach(() => {
-    render(<TodoItem todo={todo} />);
+    render(<TodoList todo={todo} />);
   });
 
   it("renders the CreateTodo component", () => {
