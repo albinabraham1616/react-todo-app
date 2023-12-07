@@ -1,9 +1,19 @@
 import styles from "./Navbar.module.css";
-import { NavButton } from "..";
+import { NavButton, CreateTodo } from "..";
 import { INavProps } from "../types";
 import { Link } from "react-router-dom";
-
-function NavBar({ handleClick, navType }: INavProps) {
+import Modal from "react-modal";
+import { useState } from "react";
+function NavBar({ handleClick, navType, setShowModal }: INavProps) {
+  const [modalOpen, setModalOpen] = useState(false);
+  function isOpenCreateModal() {
+    setModalOpen(true);
+    setShowModal("create");
+  }
+  function onCloseModal() {
+    setModalOpen(false);
+    setShowModal("");
+  }
   return (
     <main className={styles.container} data-testid="NavBar">
       <header className={styles.heading} data-testid="header">
@@ -40,17 +50,28 @@ function NavBar({ handleClick, navType }: INavProps) {
               </Link>
             </li>
             <li className={styles.button}>
-              <Link to="/add-todo">
-                <NavButton
-                  value="+"
-                  isActive={navType === "Add-Todo"}
-                  onNavClick={handleClick}
-                />
-              </Link>
+              <NavButton
+                value="+"
+                isActive={navType === "Add-Todo"}
+                onNavClick={isOpenCreateModal}
+              />
             </li>
           </ul>
         </div>
       </nav>
+      <Modal
+        isOpen={modalOpen}
+        onRequestClose={onCloseModal}
+        className={styles.addmodal}
+      >
+        <CreateTodo
+          setShowModal={setShowModal}
+          selectedTodo={undefined}
+          isUpdate={false}
+          handleCancel={onCloseModal}
+          setModalOpen={setModalOpen}
+        />
+      </Modal>
     </main>
   );
 }

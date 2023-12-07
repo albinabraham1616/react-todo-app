@@ -1,35 +1,30 @@
 import { useState, useEffect } from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { NavBar, CreateTodo, TodoList } from "./Components";
+import { Route, Routes } from "react-router-dom";
+import { NavBar, TodoList } from "./Components";
 import { TodoItems } from "./Components/types";
 import TodoService from "./TodoService/todo.service";
 
 function App() {
   const [activeItem, setActiveItem] = useState("All");
   const [todos, setTodos] = useState<TodoItems[]>([]);
-  const [selectedTodo, setSelectedTodo] = useState<TodoItems | null>(null);
   const [showModal, setShowModal] = useState("");
-
-  const filteredTodos =
-    activeItem === "All"
-      ? todos
-      : todos.filter((todo) => todo.status === activeItem);
+  // const [error,setError]=useState(null)
 
   useEffect(() => {
     TodoService.getAllTodos()
       .then((res) => {
         setTodos(res.data);
+        // setError(null)
       })
       .catch((e) => {
         console.log(e.response.data);
       });
-  }, []);
+  }, [showModal]);
 
   const handleItemClick = (value: string) => {
     if (value === "+") {
       setActiveItem("Add-Todo");
       setShowModal("create");
-      setSelectedTodo(null);
     } else {
       setActiveItem(value);
       setShowModal("");
@@ -41,70 +36,49 @@ function App() {
     setTodos(updatedTodos);
   }
   return (
-    <BrowserRouter>
-      <div>
-        <NavBar handleClick={handleItemClick} navType={activeItem} />
+    <div>
+      <NavBar
+        handleClick={handleItemClick}
+        navType={activeItem}
+        setShowModal={setShowModal}
+      />
 
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <TodoList
-                todos={filteredTodos}
-                setShowModal={setShowModal}
-                onDelete={handleDeleteClick}
-              />
-            }
-          />
-          <Route
-            path="/pending"
-            element={
-              <TodoList
-                todos={filteredTodos}
-                setShowModal={setShowModal}
-                onDelete={handleDeleteClick}
-              />
-            }
-          />
-          <Route
-            path="/completed"
-            element={
-              <TodoList
-                todos={filteredTodos}
-                setShowModal={setShowModal}
-                onDelete={handleDeleteClick}
-              />
-            }
-          />
-
-          <Route
-            path="/add-todo"
-            element={
-              <TodoList
-                todos={filteredTodos}
-                setShowModal={setShowModal}
-                onDelete={handleDeleteClick}
-              />
-            }
-          />
-        </Routes>
-
-        {showModal === "create" && (
-          <CreateTodo
-            setShowModal={setShowModal}
-            selectedTodo={null}
-            isUpdate={false}
-          />
-        )}
-        {showModal === "update" && (
-          <CreateTodo
-            setShowModal={setShowModal}
-            selectedTodo={selectedTodo}
-            isUpdate={true}
-          />
-        )}
-      </div>
-    </BrowserRouter>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <TodoList
+              todos={todos}
+              setShowModal={setShowModal}
+              showModal={showModal}
+              onDelete={handleDeleteClick}
+            />
+          }
+        />
+        <Route
+          path="/pending"
+          element={
+            <TodoList
+              todos={todos}
+              setShowModal={setShowModal}
+              showModal={showModal}
+              onDelete={handleDeleteClick}
+            />
+          }
+        />
+        <Route
+          path="/completed"
+          element={
+            <TodoList
+              todos={todos}
+              setShowModal={setShowModal}
+              showModal={showModal}
+              onDelete={handleDeleteClick}
+            />
+          }
+        />
+      </Routes>
+    </div>
   );
 }
 export default App;

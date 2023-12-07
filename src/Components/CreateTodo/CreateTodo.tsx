@@ -2,17 +2,29 @@ import React, { useState } from "react";
 import styles from "./CreateTodo.module.css";
 import { CreateTodoData, CreateTodoProps } from "../types";
 import TodoService from "../../TodoService/todo.service";
+import { useNavigate } from "react-router";
+import { validateFormData } from "../todoSchema";
+function CreateTodo({
+  setShowModal,
+  selectedTodo,
+  isUpdate,
+  handleCancel,
+  setIsEditModalOpen,
+  setModalOpen,
+}: CreateTodoProps) {
+  const navigate = useNavigate();
 
-function CreateTodo({ setShowModal, selectedTodo, isUpdate }: CreateTodoProps) {
   const [formData, setFormData] = useState<CreateTodoData>({
-    title: isUpdate ? selectedTodo?.title : "",
-    description: isUpdate ? selectedTodo?.description : "",
-    dueDate: isUpdate ? selectedTodo?.dueDate : "",
+    title: isUpdate ? selectedTodo?.title || "" : "",
+    description: isUpdate ? selectedTodo?.description || "" : "",
+    dueDate: isUpdate ? selectedTodo?.dueDate || "" : "",
   });
+
   const [completed, setCompleted] = useState<boolean>(
     isUpdate ? selectedTodo?.status === "Completed" : false,
   );
-
+  const [titleError, setTitleError] = useState("");
+  const [descriptionError, setDescriptionError] = useState("");
   /**
    * Handles input changes in the form fields.
    */
@@ -25,15 +37,18 @@ function CreateTodo({ setShowModal, selectedTodo, isUpdate }: CreateTodoProps) {
   const handleCheckboxChange = () => {
     setCompleted((prevCompleted) => !prevCompleted);
   };
+
   /**
    * Handles the submission to create a new Todo.
    */
   const handleCreate = () => {
-    console.log(formData);
-
     if (isUpdate) {
       const reqBody = {
         id: selectedTodo?.id,
+        title:
+          formData.title.length > 0
+            ? formData.title
+            : selectedTodo?.title || "",
         status: completed ? "Completed" : "Pending",
         description:
           formData.description.length > 0
@@ -43,18 +58,16 @@ function CreateTodo({ setShowModal, selectedTodo, isUpdate }: CreateTodoProps) {
           formData.dueDate.length > 0
             ? formData.dueDate
             : selectedTodo?.dueDate || "",
-        title:
-          formData.title.length > 0
-            ? formData.title
-            : selectedTodo?.title || "",
       };
 
       TodoService.updateTodo(selectedTodo?.id, reqBody)
         .then((res) => {
           if (res.status === 200) {
             setShowModal("");
+            setIsEditModalOpen(false);
           }
         })
+
         .catch((error) => {
           console.error("Error updating todo:", error);
         });
@@ -66,23 +79,31 @@ function CreateTodo({ setShowModal, selectedTodo, isUpdate }: CreateTodoProps) {
         dueDate: formData.dueDate || "",
         title: formData.title || "",
       };
-      console.log("Update Mode:", reqBody);
-      TodoService.createTodo(reqBody).then((res) => {
-        if (res.status === 201) {
-          setShowModal("");
-        }
-      });
+
+      const validate = validateFormData(reqBody);
+
+      if (validate.success) {
+        console.log(validate.success);
+        TodoService.createTodo(reqBody).then((res) => {
+          if (res.status === 201) {
+            setModalOpen(false);
+            setShowModal("");
+          }
+        });
+      } else {
+        validate.error.errors.forEach((error) => {
+          error.message.includes("Title") ? setTitleError(error.message) : "";
+          error.message.includes("Description")
+            ? setDescriptionError(error.message)
+            : "";
+        });
+      }
     }
+    navigate("/");
   };
-  /**
-   * Handles the cancellation of Todo creation.
-   */
-  function handleCancel() {
-    setShowModal("");
-  }
   return (
     <div className={styles.todo_card_container} data-testid="createTodo">
-      <form className={styles.todo_card}>
+      <div className={styles.todo_card}>
         <label>
           Title:
           <div className={styles.gap}></div>
@@ -91,16 +112,18 @@ function CreateTodo({ setShowModal, selectedTodo, isUpdate }: CreateTodoProps) {
             type="text"
             name="title"
             placeholder="Todo title here"
-            value={
-              formData.title.length > 0 ? formData.title : selectedTodo?.title
-            }
+            value={formData.title || ""}
             onChange={handleInputChange}
             required
           />
         </label>
         <br />
         <br></br>
-
+        {titleError.length > 0 ? (
+          <div style={{ color: "hsl(0, 100%, 50%)" }}>{titleError}</div>
+        ) : (
+          ""
+        )}
         <label>
           Description:
           <div className={styles.gap}></div>
@@ -108,18 +131,18 @@ function CreateTodo({ setShowModal, selectedTodo, isUpdate }: CreateTodoProps) {
             className={styles.description}
             name="description"
             placeholder="Todo Details"
-            value={
-              formData.description.length > 0
-                ? formData.description
-                : selectedTodo?.description
-            }
+            value={formData.description || ""}
             onChange={handleInputChange}
             required
           />
         </label>
         <br />
         <br></br>
-
+        {descriptionError.length > 0 ? (
+          <div style={{ color: "hsl(0, 100%, 50%)" }}>{descriptionError}</div>
+        ) : (
+          ""
+        )}
         <label>
           Due Date:
           <div className={styles.gap}></div>
@@ -128,11 +151,7 @@ function CreateTodo({ setShowModal, selectedTodo, isUpdate }: CreateTodoProps) {
             className={styles.dueDate}
             type="date"
             name="dueDate"
-            value={
-              formData.dueDate.length > 0
-                ? formData.dueDate
-                : selectedTodo?.dueDate
-            }
+            value={formData.dueDate || ""}
             onChange={handleInputChange}
             required
           />
@@ -155,20 +174,16 @@ function CreateTodo({ setShowModal, selectedTodo, isUpdate }: CreateTodoProps) {
           )}
         </div>
         <button
-          type="submit"
+          type="button"
           onClick={handleCancel}
           className={styles.cancel_button}
         >
           CANCEL
         </button>
-        <button
-          type="submit"
-          onClick={handleCreate}
-          className={styles.create_button}
-        >
+        <button className={styles.create_button} onClick={handleCreate}>
           {isUpdate ? "UPDATE" : "CREATE"}
         </button>
-      </form>
+      </div>
     </div>
   );
 }
