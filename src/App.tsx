@@ -3,18 +3,17 @@ import { Route, Routes } from "react-router-dom";
 import { NavBar, TodoList } from "./Components";
 import { TodoItems } from "./Components/types";
 import TodoService from "./TodoService/todo.service";
+import "./reset.css";
 
 function App() {
   const [activeItem, setActiveItem] = useState("All");
   const [todos, setTodos] = useState<TodoItems[]>([]);
   const [showModal, setShowModal] = useState("");
-  // const [error,setError]=useState(null)
 
   useEffect(() => {
     TodoService.getAllTodos()
       .then((res) => {
         setTodos(res.data);
-        // setError(null)
       })
       .catch((e) => {
         console.log(e.response.data);

@@ -1,3 +1,5 @@
+import { MouseEventHandler, ReactNode } from "react";
+
 /**
  * Interface representing the props for the DeleteModal component.
  */
@@ -16,4 +18,10 @@ export interface DeleteModalProps {
    * A callback function to be called when the user confirms the delete action.
    */
   confirmDelete: () => void;
+}
+
+export interface ButtonProps {
+  onClick: MouseEventHandler<HTMLButtonElement>;
+  children: ReactNode;
+  className?: string;
 }

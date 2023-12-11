@@ -46,35 +46,10 @@
   width: 100%;
   word-wrap: break-word;
 }
-.modal {
-  border: 2px solid rgb(15, 15, 15);
-  height: 16rem;
-  width: 36rem;
-  margin: 0 auto;
-  padding-top: 4rem;
-  padding-left: 11rem;
-  margin-top: 18rem;
-  background-color: rgb(237, 233, 233);
-}
 
-.yesButton,
-.noButton {
-  height: 2.5rem;
-  width: 5rem;
-  margin-right: 3.5rem;
-  font-size: 1.5rem;
-  font-family: "Courier New", Courier, monospace;
-  font-weight: bolder;
-  cursor: pointer;
-  background-color: burlywood;
-}
-.yesButton:hover,
-.noButton:hover {
-  transform: scale(1.1);
-}
 .updatemodal {
-  margin-top: 11.5rem; 
- }
+  margin-top: 11.5rem;
+}
 .message {
   margin-right: 10rem;
 }
