@@ -84,7 +84,12 @@ export interface INavProps {
   /**
    * The currently activated item in the navigation component.if i click the value,the value will display in header.
    */
-  navType: "All" | "Pending" | "Completed" | "Add-Todo";
+  navType: string;
+
+  /**
+   * Function to set the modal visibility state.
+   */
+  setShowModal: React.Dispatch<React.SetStateAction<string>>;
 }
 
 /**
@@ -105,6 +110,21 @@ export interface CreateTodoProps {
    * A boolean flag indicating whether the component is in update mode.
    */
   isUpdate: boolean;
+
+  /**
+   * Callback function to handle the cancellation of Todo creation.
+   */
+  handleCancel: () => void;
+
+  /**
+   * Function to set the state controlling the visibility of the edit modal.
+   */
+  setIsEditModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+
+  /**
+   * Function to set the state controlling the visibility of a modal.
+   */
+  setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 /**
