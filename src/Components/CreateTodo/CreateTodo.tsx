@@ -4,6 +4,7 @@ import { CreateTodoData, CreateTodoProps } from "../types";
 import TodoService from "../../TodoService/todo.service";
 import { useNavigate } from "react-router";
 import { validateFormData } from "../todoSchema";
+
 function CreateTodo({
   setShowModal,
   selectedTodo,
@@ -59,18 +60,27 @@ function CreateTodo({
             ? formData.dueDate
             : selectedTodo?.dueDate || "",
       };
+      const validate = validateFormData(reqBody);
+      if (validate.success) {
+        TodoService.updateTodo(selectedTodo?.id, reqBody)
+          .then((res) => {
+            if (res.status === 200) {
+              setShowModal("");
+              setIsEditModalOpen(false);
+            }
+          })
 
-      TodoService.updateTodo(selectedTodo?.id, reqBody)
-        .then((res) => {
-          if (res.status === 200) {
-            setShowModal("");
-            setIsEditModalOpen(false);
-          }
-        })
-
-        .catch((error) => {
-          console.error("Error updating todo:", error);
+          .catch((error) => {
+            console.error("Error updating todo:", error);
+          });
+      } else {
+        validate.error.errors.forEach((error) => {
+          error.message.includes("Title") ? setTitleError(error.message) : "";
+          error.message.includes("Description")
+            ? setDescriptionError(error.message)
+            : "";
         });
+      }
     } else {
       const reqBody = {
         id: selectedTodo?.id,
@@ -81,9 +91,7 @@ function CreateTodo({
       };
 
       const validate = validateFormData(reqBody);
-
       if (validate.success) {
-        console.log(validate.success);
         TodoService.createTodo(reqBody).then((res) => {
           if (res.status === 201) {
             setModalOpen(false);

@@ -1,9 +1,9 @@
-import styles from "./Navbar.module.css";
 import { NavButton, CreateTodo } from "..";
 import { INavProps } from "../types";
 import { Link } from "react-router-dom";
 import Modal from "react-modal";
 import { useState } from "react";
+
 function NavBar({ handleClick, navType, setShowModal }: INavProps) {
   const [modalOpen, setModalOpen] = useState(false);
   function isOpenCreateModal() {
@@ -15,13 +15,16 @@ function NavBar({ handleClick, navType, setShowModal }: INavProps) {
     setShowModal("");
   }
   return (
-    <main className={styles.container} data-testid="NavBar">
-      <header className={styles.heading} data-testid="header">
+    <main className=" bg-black  rounded-md  mt-2" data-testid="NavBar">
+      <header
+        className="  text-5xl text-white text-center pt-3 font-bold font-mono"
+        data-testid="header"
+      >
         {navType}
       </header>
-      <nav className={styles.navbar_container}>
-        <div className={styles.navbar}>
-          <ul className={styles.textbutton}>
+      <nav className=" border-2 text-4xl mt-6">
+        <div className=" h-20 pt-5">
+          <ul className="flex items-center justify-evenly">
             <li>
               <Link to="/">
                 <NavButton
@@ -49,7 +52,7 @@ function NavBar({ handleClick, navType, setShowModal }: INavProps) {
                 />
               </Link>
             </li>
-            <li className={styles.button}>
+            <li className="h-10 w-24 text-2.5xl bg-blue-300 rounded-md flex hover:bg-teal-400 transform  hover:scale-110 cursor-pointer ">
               <NavButton
                 value="+"
                 isActive={navType === "Add-Todo"}
@@ -59,11 +62,7 @@ function NavBar({ handleClick, navType, setShowModal }: INavProps) {
           </ul>
         </div>
       </nav>
-      <Modal
-        isOpen={modalOpen}
-        onRequestClose={onCloseModal}
-        className={styles.addmodal}
-      >
+      <Modal isOpen={modalOpen} onRequestClose={onCloseModal} className="mt-44">
         <CreateTodo
           setShowModal={setShowModal}
           selectedTodo={undefined}
