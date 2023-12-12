@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
 import { TodoItems } from "../types";
-import styles from "./TodoItem.module.css";
 import TodoCard from "./TodoCard";
 import DeleteModal from "../Modal/DeleteModal";
 import { CreateTodo } from "..";
@@ -60,7 +59,7 @@ function TodoList({
   }
 
   return (
-    <main className={styles.container} data-testid="TodoItem">
+    <main data-testid="TodoItem">
       <div>
         {filteredTodos.map((todo) => (
           <TodoCard
@@ -72,7 +71,7 @@ function TodoList({
         ))}
       </div>
 
-      <Modal isOpen={isEditModalOpen} className={styles.updatemodal}>
+      <Modal isOpen={isEditModalOpen} className="mt-32">
         <CreateTodo
           setShowModal={setShowModal}
           selectedTodo={todoToEdit}

@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import styles from "./CreateTodo.module.css";
 import { CreateTodoData, CreateTodoProps } from "../types";
 import TodoService from "../../TodoService/todo.service";
 import { useNavigate } from "react-router";
 import { validateFormData } from "../todoSchema";
+import { Button } from "../Button/Button";
 
 function CreateTodo({
   setShowModal,
@@ -110,13 +110,16 @@ function CreateTodo({
     navigate("/");
   };
   return (
-    <div className={styles.todo_card_container} data-testid="createTodo">
-      <div className={styles.todo_card}>
+    <div
+      className=" flex  justify-center bg-black  mb-24 h-3/4  w-2/5 rounded-md text-blue-700 mx-auto"
+      data-testid="createTodo"
+    >
+      <div className=" text-2xl font-bold">
         <label>
           Title:
-          <div className={styles.gap}></div>
+          <div className="p-2.5"></div>
           <input
-            className={styles.title}
+            className=" h-12 w-full bottom-1 text-2xl text-black"
             type="text"
             name="title"
             placeholder="Todo title here"
@@ -126,7 +129,7 @@ function CreateTodo({
           />
         </label>
         <br />
-        <br></br>
+        <br />
         {titleError.length > 0 ? (
           <div style={{ color: "hsl(0, 100%, 50%)" }}>{titleError}</div>
         ) : (
@@ -134,9 +137,9 @@ function CreateTodo({
         )}
         <label>
           Description:
-          <div className={styles.gap}></div>
+          <div className="p-2.5"></div>
           <textarea
-            className={styles.description}
+            className=" h-28 w-full text-2xl text-black"
             name="description"
             placeholder="Todo Details"
             value={formData.description || ""}
@@ -145,7 +148,7 @@ function CreateTodo({
           />
         </label>
         <br />
-        <br></br>
+        <br />
         {descriptionError.length > 0 ? (
           <div style={{ color: "hsl(0, 100%, 50%)" }}>{descriptionError}</div>
         ) : (
@@ -153,10 +156,10 @@ function CreateTodo({
         )}
         <label>
           Due Date:
-          <div className={styles.gap}></div>
+          <div className="p-2.5"></div>
           <input
             data-testid="dueDate"
-            className={styles.dueDate}
+            className=" h-12 w-full text-2xl text-black"
             type="date"
             name="dueDate"
             value={formData.dueDate || ""}
@@ -165,14 +168,13 @@ function CreateTodo({
           />
         </label>
         <br />
-
-        <div className={styles.checkbox}>
+        <br />
+        <div className=" flex flex-row">
           {isUpdate && (
             <label>
-              <div className={styles.gap}></div>
+              <div className="p-2.5"></div>
               Completed:
               <input
-                className={styles.completedCheckbox}
                 type="checkbox"
                 name="completed"
                 checked={completed}
@@ -181,16 +183,18 @@ function CreateTodo({
             </label>
           )}
         </div>
-        <button
-          type="button"
+        <Button
           onClick={handleCancel}
-          className={styles.cancel_button}
+          className=" h-12 w-28  ml-40 hover:text-zinc-950 text-blue-500 bg-yellow-300 mb-4 "
         >
           CANCEL
-        </button>
-        <button className={styles.create_button} onClick={handleCreate}>
+        </Button>
+        <Button
+          className=" h-12 w-28  ml-20 hover:text-zinc-950 text-blue-500 mx-auto bg-yellow-300 mb-4  "
+          onClick={handleCreate}
+        >
           {isUpdate ? "UPDATE" : "CREATE"}
-        </button>
+        </Button>
       </div>
     </div>
   );
