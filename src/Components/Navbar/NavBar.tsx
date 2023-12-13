@@ -62,7 +62,7 @@ function NavBar({ handleClick, navType, setShowModal }: INavProps) {
           </ul>
         </div>
       </nav>
-      <Modal isOpen={modalOpen} onRequestClose={onCloseModal} className="mt-44">
+      <Modal isOpen={modalOpen} onRequestClose={onCloseModal} className="mt-40">
         <CreateTodo
           setShowModal={setShowModal}
           selectedTodo={undefined}

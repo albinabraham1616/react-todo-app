@@ -1,15 +1,6 @@
 import Modal from "react-modal";
-import { ButtonProps } from "./types";
+import { Button } from "../Button/Button";
 import { DeleteModalProps } from "./types";
-
-const Button = ({ onClick, children, className }: ButtonProps) => (
-  <button
-    className={`h-10 w-20 bg-red-300 font-bold text-xl transform hover:scale-110 mt-4 ml-16 rounded-md hover:text-red-500 ${className}`}
-    onClick={onClick}
-  >
-    {children}
-  </button>
-);
 
 const DeleteModal = ({
   isOpen,
@@ -25,10 +16,10 @@ const DeleteModal = ({
       <h2 className="mb-1  font-bold text-xl ">
         Are you sure you want to delete this item?
       </h2>
-      <Button onClick={confirmDelete} className="ml-16">
+      <Button onClick={confirmDelete} className=" ml-20 bg-red-300 mt-4 mr-12">
         Yes
       </Button>
-      <Button onClick={onRequestClose} className="ml-16">
+      <Button onClick={onRequestClose} className=" bg-red-300 mt-4 ">
         No
       </Button>
     </Modal>
