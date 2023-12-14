@@ -4,7 +4,7 @@ import TodoService from "../../TodoService/todo.service";
 import { useNavigate } from "react-router";
 import { validateFormData } from "../todoSchema";
 import { Button } from "../Button/Button";
-
+import { useErrorBoundary } from "react-error-boundary";
 function CreateTodo({
   setShowModal,
   selectedTodo,
@@ -14,7 +14,7 @@ function CreateTodo({
   setModalOpen,
 }: CreateTodoProps) {
   const navigate = useNavigate();
-
+  const { showBoundary } = useErrorBoundary();
   const [formData, setFormData] = useState<CreateTodoData>({
     title: isUpdate ? selectedTodo?.title || "" : "",
     description: isUpdate ? selectedTodo?.description || "" : "",
@@ -42,7 +42,7 @@ function CreateTodo({
   /**
    * Handles the submission to create a new Todo.
    */
-  const handleCreate = () => {
+  const handleCreate = async () => {
     if (isUpdate) {
       const reqBody = {
         id: selectedTodo?.id,
@@ -62,17 +62,18 @@ function CreateTodo({
       };
       const validate = validateFormData(reqBody);
       if (validate.success) {
-        TodoService.updateTodo(selectedTodo?.id, reqBody)
-          .then((res) => {
-            if (res.status === 200) {
-              setShowModal("");
-              setIsEditModalOpen(false);
-            }
-          })
-
-          .catch((error) => {
-            console.error("Error updating todo:", error);
-          });
+        try {
+          await TodoService.updateTodo(selectedTodo?.id, reqBody).then(
+            (res) => {
+              if (res.status === 200) {
+                setShowModal("");
+                setIsEditModalOpen(false);
+              }
+            },
+          );
+        } catch (error) {
+          showBoundary(error);
+        }
       } else {
         validate.error.errors.forEach((error) => {
           error.message.includes("Title") ? setTitleError(error.message) : "";
@@ -92,12 +93,16 @@ function CreateTodo({
 
       const validate = validateFormData(reqBody);
       if (validate.success) {
-        TodoService.createTodo(reqBody).then((res) => {
-          if (res.status === 201) {
-            setModalOpen(false);
-            setShowModal("");
-          }
-        });
+        try {
+          await TodoService.createTodo(reqBody).then((res) => {
+            if (res.status === 201) {
+              setModalOpen(false);
+              setShowModal("");
+            }
+          });
+        } catch (error) {
+          showBoundary(error);
+        }
       } else {
         validate.error.errors.forEach((error) => {
           error.message.includes("Title") ? setTitleError(error.message) : "";

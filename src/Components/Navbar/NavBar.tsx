@@ -24,7 +24,7 @@ function NavBar({ handleClick, navType, setShowModal }: INavProps) {
       </header>
       <nav className=" border-2 text-4xl mt-6">
         <div className=" h-20 pt-5">
-          <ul className="flex items-center justify-evenly">
+          <ul className="flex items-center justify-evenly ">
             <li>
               <Link to="/">
                 <NavButton

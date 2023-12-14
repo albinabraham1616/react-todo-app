@@ -4,21 +4,25 @@ import { NavBar, TodoList } from "./Components";
 import { TodoItems } from "./Components/types";
 import TodoService from "./TodoService/todo.service";
 import "./reset.css";
+import { useErrorBoundary } from "react-error-boundary";
 
 function App() {
   const [activeItem, setActiveItem] = useState("All");
   const [todos, setTodos] = useState<TodoItems[]>([]);
   const [showModal, setShowModal] = useState("");
-
+  const { showBoundary } = useErrorBoundary();
   useEffect(() => {
-    TodoService.getAllTodos()
-      .then((res) => {
-        setTodos(res.data);
-      })
-      .catch((e) => {
-        console.log(e.response.data);
-      });
-  }, [showModal]);
+    const getTodos = async () => {
+      try {
+        await TodoService.getAllTodos().then((res) => {
+          setTodos(res.data);
+        });
+      } catch (error) {
+        showBoundary(error);
+      }
+    };
+    getTodos();
+  }, [showBoundary, showModal]);
 
   const handleItemClick = (value: string) => {
     if (value === "+") {
@@ -29,10 +33,14 @@ function App() {
       setShowModal("");
     }
   };
-  function handleDeleteClick(todoId: number) {
-    TodoService.deleteTodo(todoId);
-    const updatedTodos = todos.filter((todo) => todo.id !== todoId);
-    setTodos(updatedTodos);
+  async function handleDeleteClick(todoId: number) {
+    try {
+      await TodoService.deleteTodo(todoId);
+      const updatedTodos = todos.filter((todo) => todo.id !== todoId);
+      setTodos(updatedTodos);
+    } catch (error) {
+      showBoundary(error);
+    }
   }
   return (
     <div>
