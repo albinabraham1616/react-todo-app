@@ -8,13 +8,9 @@ const getAllTodos = async (): Promise<ApiResponse> => {
       headers: {
         Authorization: import.meta.env.VITE_API_KEY,
       },
+      credentials: "include",
     });
 
-    if (!response.ok) {
-      throw new Error(
-        `Failed to fetch todos. Server returned status ${response.status}`,
-      );
-    }
     const data: Todo[] = await response.json();
 
     return {
@@ -36,12 +32,9 @@ const createTodo = async (data: Todo): Promise<ApiResponse> => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
+      credentials: "include",
     });
-    if (!response.ok) {
-      throw new Error(
-        `Failed to create todo. Server returned status ${response.status}`,
-      );
-    }
+
     return {
       status: response.status,
       data: await response.json(),
@@ -61,12 +54,9 @@ const updateTodo = async (id: number, data: Todo): Promise<ApiResponse> => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
+      credentials: "include",
     });
-    if (!response.ok) {
-      throw new Error(
-        `Failed to update todo. Server returned status ${response.status}`,
-      );
-    }
+
     return {
       status: response.status,
       data: await response.json(),
@@ -84,12 +74,9 @@ const deleteTodo = async (id: number): Promise<ApiResponse> => {
       headers: {
         Authorization: import.meta.env.VITE_API_KEY,
       },
+      credentials: "include",
     });
-    if (!response.ok) {
-      throw new Error(
-        `Failed to delete todo. Server returned status ${response.status}`,
-      );
-    }
+
     return {
       status: response.status,
       data: await response.json(),

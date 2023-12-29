@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
-import { Route, Routes } from "react-router-dom";
-import { NavBar, TodoList } from "./Components";
+import { Route, Routes, Navigate } from "react-router-dom";
+import { NavBar, TodoList, RegisterForm, LoginForm } from "./Components";
 import { TodoItems } from "./Components/types";
 import TodoService from "./TodoService/todo.service";
-import "./reset.css";
 import { useErrorBoundary } from "react-error-boundary";
 
 function App() {
@@ -11,18 +10,22 @@ function App() {
   const [todos, setTodos] = useState<TodoItems[]>([]);
   const [showModal, setShowModal] = useState("");
   const { showBoundary } = useErrorBoundary();
+  const [isLogin, setIsLogin] = useState(false);
+
   useEffect(() => {
-    const getTodos = async () => {
-      try {
-        await TodoService.getAllTodos().then((res) => {
-          setTodos(res.data);
-        });
-      } catch (error) {
-        showBoundary(error);
-      }
-    };
-    getTodos();
-  }, [showBoundary, showModal]);
+    if (isLogin) {
+      const getTodos = async () => {
+        try {
+          await TodoService.getAllTodos().then((res) => {
+            setTodos(res.data);
+          });
+        } catch (error) {
+          showBoundary(error);
+        }
+      };
+      getTodos();
+    }
+  }, [isLogin, showBoundary, showModal]);
 
   const handleItemClick = (value: string) => {
     if (value === "+") {
@@ -33,6 +36,7 @@ function App() {
       setShowModal("");
     }
   };
+
   async function handleDeleteClick(todoId: number) {
     try {
       await TodoService.deleteTodo(todoId);
@@ -42,50 +46,70 @@ function App() {
       showBoundary(error);
     }
   }
+
+  const handleLogin = () => {
+    setIsLogin(true);
+  };
+
   return (
     <div>
-      <NavBar
-        handleClick={handleItemClick}
-        navType={activeItem}
-        setShowModal={setShowModal}
-      />
+      {isLogin ? (
+        <div>
+          <NavBar
+            setIsLogin={setIsLogin}
+            handleClick={handleItemClick}
+            navType={activeItem}
+            setShowModal={setShowModal}
+          />
 
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <TodoList
-              todos={todos}
-              setShowModal={setShowModal}
-              showModal={showModal}
-              onDelete={handleDeleteClick}
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <TodoList
+                  todos={todos}
+                  setShowModal={setShowModal}
+                  showModal={showModal}
+                  onDelete={handleDeleteClick}
+                />
+              }
             />
-          }
-        />
-        <Route
-          path="/pending"
-          element={
-            <TodoList
-              todos={todos}
-              setShowModal={setShowModal}
-              showModal={showModal}
-              onDelete={handleDeleteClick}
+            <Route
+              path="/pending"
+              element={
+                <TodoList
+                  todos={todos}
+                  setShowModal={setShowModal}
+                  showModal={showModal}
+                  onDelete={handleDeleteClick}
+                />
+              }
             />
-          }
-        />
-        <Route
-          path="/completed"
-          element={
-            <TodoList
-              todos={todos}
-              setShowModal={setShowModal}
-              showModal={showModal}
-              onDelete={handleDeleteClick}
+            <Route
+              path="/completed"
+              element={
+                <TodoList
+                  todos={todos}
+                  setShowModal={setShowModal}
+                  showModal={showModal}
+                  onDelete={handleDeleteClick}
+                />
+              }
             />
-          }
-        />
-      </Routes>
+          </Routes>
+        </div>
+      ) : (
+        <Routes>
+          <Route path="*" element={<Navigate to="/login" />} />
+          <Route
+            path="/login"
+            element={<LoginForm setIsLogin={handleLogin} />}
+          />
+          <Route path="/register" element={<RegisterForm />} />
+        </Routes>
+      )}
     </div>
   );
 }
+
 export default App;

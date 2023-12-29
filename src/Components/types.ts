@@ -90,6 +90,11 @@ export interface INavProps {
    * Function to set the modal visibility state.
    */
   setShowModal: React.Dispatch<React.SetStateAction<string>>;
+
+  /**
+   *  * Callback function to update the login state.
+   */
+  setIsLogin: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 /**
@@ -145,4 +150,16 @@ export interface TodoCardProps {
    * Callback function triggered when the edit button is clicked.
    */
   onEdit: (todo: TodoItems) => void;
+}
+
+export interface User {
+  /**
+   * The userEmail of the user.
+   */
+  userEmail: string;
+
+  /**
+   * The hashed password of the user.
+   */
+  userPassword: string;
 }
