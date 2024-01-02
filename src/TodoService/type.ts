@@ -34,3 +34,47 @@ export interface ApiResponse {
    */
   data: Todo[];
 }
+
+/**
+ * Represents the properties passed to the `Login` component.
+ */
+export interface LoginProps {
+  /**
+   * Callback function to update the login state.
+   */
+  setIsLogin: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+/**
+ * Represents the data required for user login.
+ */
+export interface LoginData {
+  /**
+   * User's email for login.
+   */
+  userEmail: string;
+
+  /**
+   * User's password for login.
+   */
+  userPassword: string;
+}
+
+/**
+ * Represents the data required for user registration.
+ */
+export interface RegisterData {
+  /**
+   * User's name for registration.
+   */
+  userName: string;
+  /**
+   * User's email for registration.
+   */
+  userEmail: string;
+
+  /**
+   * User's password for registration.
+   */
+  userPassword: string;
+}
